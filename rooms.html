@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms Management - SmartPG</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo"><h2><i class="fa-solid fa-hotel"></i> SmartPG</h2></div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                <li class="active"><a href="rooms.html"><i class="fa-solid fa-bed"></i> Rooms</a></li>
+                <li><a href="tenant.html"><i class="fa-solid fa-users"></i> Tenants</a></li>
+                <li><a href="fees.html"><i class="fa-solid fa-money-check-dollar"></i> Fees</a></li>
+                <li><a href="#" id="logoutBtn" style="color: #e53e3e;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>Rooms & Sharing Management</h1>
+            </header>
+
+            <div class="form-container" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 25px;">
+                <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-plus-circle"></i> Add New Room</h3>
+                <form id="roomForm" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-end;">
+                    <div style="flex: 1; min-width: 150px;">
+                        <label style="display:block; margin-bottom:5px; font-size:14px; color:#4a5568;">Room Number</label>
+                        <input type="text" id="roomNo" placeholder="e.g. 105" required style="width:100%; padding:10px; border:1px solid #cbd5e0; border-radius:6px;">
+                    </div>
+                    <div style="flex: 1; min-width: 150px;">
+                        <label style="display:block; margin-bottom:5px; font-size:14px; color:#4a5568;">Room Type</label>
+                        <select id="roomType" style="width:100%; padding:10px; border:1px solid #cbd5e0; border-radius:6px;">
+                            <option value="AC">AC Room</option>
+                            <option value="Non-AC">Non-AC Room</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 150px;">
+                        <label style="display:block; margin-bottom:5px; font-size:14px; color:#4a5568;">Total Sharing (Beds)</label>
+                        <select id="roomSharing" style="width:100%; padding:10px; border:1px solid #cbd5e0; border-radius:6px;">
+                            <option value="1">1 Seater (Single)</option>
+                            <option value="2">2 Seater (Double)</option>
+                            <option value="3">3 Seater (Triple)</option>
+                            <option value="4">4 Seater (Quad)</option>
+                        </select>
+                    </div>
+                    <div style="flex: 1; min-width: 150px;">
+                        <label style="display:block; margin-bottom:5px; font-size:14px; color:#4a5568;">Rent Per Bed (₹)</label>
+                        <input type="number" id="roomRent" placeholder="e.g. 6000" required style="width:100%; padding:10px; border:1px solid #cbd5e0; border-radius:6px;">
+                    </div>
+                    <button type="submit" style="background:#2b6cb0; color:white; padding:11px 20px; border:none; border-radius:6px; font-weight:bold; cursor:pointer;"><i class="fa-solid fa-plus"></i> Add Room</button>
+                </form>
+            </div>
+
+            <div class="table-container" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-list"></i> Existing Rooms List</h3>
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="background: #f7fafc; border-bottom: 2px solid #e2e8f0;">
+                            <th style="padding: 12px;">ROOM NO</th>
+                            <th style="padding: 12px;">TYPE</th>
+                            <th style="padding: 12px;">SHARING CAPACITY</th>
+                            <th style="padding: 12px;">AVAILABLE BEDS</th>
+                            <th style="padding: 12px;">RENT (PER BED)</th>
+                            <th style="padding: 12px;">STATUS</th>
+                            <th style="padding: 12px;">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="roomTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="rooms.js"></script>
+</body>
+</html>

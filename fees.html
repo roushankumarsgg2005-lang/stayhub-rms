@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fees Management - SmartPG</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        /* Premium Look Custom Adjustments */
+        .fees-card-box {
+            background: white; 
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03); 
+            margin-bottom: 30px;
+            border-top: 4px solid #3182ce;
+        }
+        .fees-input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        .fees-input-group input, .fees-input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .fees-input-group input:focus, .fees-input-group select:focus {
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49,130,206,0.15);
+            outline: none;
+        }
+        .premium-btn {
+            background: #3182ce;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        .premium-btn:hover { background: #2b6cb0; }
+        .status-paid-badge {
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo"><h2><i class="fa-solid fa-hotel"></i> SmartPG</h2></div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="rooms.html"><i class="fa-solid fa-bed"></i> Rooms</a></li>
+                <li><a href="tenant.html"><i class="fa-solid fa-users"></i> Tenants</a></li>
+                <li class="active"><a href="fees.html"><i class="fa-solid fa-money-check-dollar"></i> Fees</a></li>
+                <li><a href="#" id="logoutBtn" style="color: #e53e3e;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>Fees & Payment Records</h1>
+                <p style="color: #718096; margin-top:5px;">Manage tenant rent sheets and invoices smoothly.</p>
+            </header>
+
+            <div class="fees-card-box">
+                <h3 style="margin-bottom: 20px; color:#2d3748;"><i class="fa-solid fa-wallet"></i> Record New Payment</h3>
+                <form id="feesForm" style="display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end;">
+                    <div class="fees-input-group" style="flex: 1; min-width: 200px;">
+                        <label>Select Tenant</label>
+                        <select id="tenantSelect" required>
+                            <option value="">-- Choose Tenant --</option>
+                        </select>
+                    </div>
+                    <div class="fees-input-group" style="flex: 1; min-width: 180px;">
+                        <label>Amount Paid (₹)</label>
+                        <input type="number" id="amountPaid" placeholder="e.g. 5000" required>
+                    </div>
+                    <div class="fees-input-group" style="flex: 1; min-width: 180px;">
+                        <label>Billing Month</label>
+                        <input type="month" id="paymentMonth" required>
+                    </div>
+                    <button type="submit" class="premium-btn"><i class="fa-solid fa-receipt"></i> Submit Invoice</button>
+                </form>
+            </div>
+
+            <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.03);">
+                <h3 style="margin-bottom: 20px; color:#2d3748;"><i class="fa-solid fa-clock-rotate-left"></i> Payment History Log</h3>
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="background: #edf2f7; color: #4a5568; border-bottom: 2px solid #cbd5e0;">
+                            <th style="padding: 15px;">TENANT NAME</th>
+                            <th style="padding: 15px;">AMOUNT PAID</th>
+                            <th style="padding: 15px;">RECORDED MONTH</th>
+                            <th style="padding: 15px;">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feesTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="fees.js"></script>
+</body>
+</html>

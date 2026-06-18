@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StayHub - Smart Room & PG Management System</title>
+    <meta name="description" content="StayHub is a smart Room and PG Management System designed for easy tenant tracking, room allocation, and fees ledger management.">
+    <meta name="keywords" content="Room Management System, PG Management Software, StayHub, Hostel Management System, Tenant Tracker, Fees Ledger App">
+    <meta name="author" content="Aman Mishra">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <style>
+        .dashboard-cards { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 25px; }
+        .card-link { flex: 1; min-width: 220px; text-decoration: none; color: inherit; transition: transform 0.2s; }
+        .card-link:hover { transform: translateY(-5px); }
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; border-left: 5px solid #2b6cb0; }
+        .card.rooms-card { border-left-color: #2b6cb0; }
+        .card.tenants-card { border-left-color: #38a169; }
+        .card.beds-card { border-left-color: #dd6b20; }
+        .card.full-rooms-card { border-left-color: #e53e3e; }
+        .card-info h3 { font-size: 14px; color: #718096; text-transform: uppercase; margin-bottom: 8px; }
+        .card-info .number { font-size: 32px; font-weight: bold; color: #1a202c; }
+        .card-icon { font-size: 36px; }
+        .card.rooms-card .card-icon { color: #2b6cb0; }
+        .card.tenants-card .card-icon { color: #38a169; }
+        .card.beds-card .card-icon { color: #dd6b20; }
+        .card.full-rooms-card .card-icon { color: #e53e3e; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo"><h2><i class="fa-solid fa-hotel"></i> SmartPG</h2></div>
+            <ul class="nav-links">
+                <li class="active"><a href="index.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="rooms.html"><i class="fa-solid fa-bed"></i> Rooms</a></li>
+                <li><a href="tenant.html"><i class="fa-solid fa-users"></i> Tenants</a></li>
+                <li><a href="fees.html"><i class="fa-solid fa-money-check-dollar"></i> Fees</a></li>
+                <li><a href="#" id="logoutBtn" style="color: #e53e3e;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1>Dashboard Overview</h1>
+                <p style="color: #718096; margin-top: 5px;">Welcome back, Admin!</p>
+            </header>
+
+            <div class="dashboard-cards">
+                <a href="rooms.html" class="card-link">
+                    <div class="card rooms-card">
+                        <div class="card-info">
+                            <h3>Total Rooms</h3>
+                            <div class="number" id="totalRoomsCount">0</div>
+                        </div>
+                        <div class="card-icon"><i class="fa-solid fa-hotel"></i></div>
+                    </div>
+                </a>
+
+                <a href="tenant.html" class="card-link">
+                    <div class="card tenants-card">
+                        <div class="card-info">
+                            <h3>Active Tenants</h3>
+                            <div class="number" id="activeTenantsCount">0</div>
+                        </div>
+                        <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+                    </div>
+                </a>
+
+                <a href="rooms.html?filter=available" class="card-link">
+                    <div class="card beds-card">
+                        <div class="card-info">
+                            <h3>Available Beds</h3>
+                            <div class="number" id="availableBedsCount">0</div>
+                        </div>
+                        <div class="card-icon"><i class="fa-solid fa-door-open"></i></div>
+                    </div>
+                </a>
+
+                <a href="rooms.html?filter=full" class="card-link">
+                    <div class="card full-rooms-card">
+                        <div class="card-info">
+                            <h3>Full Rooms</h3>
+                            <div class="number" id="fullRoomsCount">0</div>
+                        </div>
+                        <div class="card-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 🔥 1. SECURITY GUARD: Agar user login nahi hai, toh turant login.html par phenk do
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.replace("login.html");
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!localStorage.getItem("pg_rooms")) {
+                const defaultRooms = [
+                    { roomNo: "101", type: "AC", sharing: 2, rent: 5500, status: "Available" },
+                    { roomNo: "102", type: "Non-AC", sharing: 3, rent: 4000, status: "Available" },
+                    { roomNo: "103", type: "AC", sharing: 1, rent: 8000, status: "Full" }
+                ];
+                localStorage.setItem("pg_rooms", JSON.stringify(defaultRooms));
+            }
+
+            if (!localStorage.getItem("pg_tenants")) {
+                const defaultTenants = [
+                    { name: "Rahul Kumar", room: "101", phone: "9876543210", status: "Booked" },
+                    { name: "Amit Sharma", room: "102", phone: "8765432109", status: "Booked" }
+                ];
+                localStorage.setItem("pg_tenants", JSON.stringify(defaultTenants));
+            }
+
+            const storedRooms = JSON.parse(localStorage.getItem("pg_rooms")) || [];
+            const storedTenants = JSON.parse(localStorage.getItem("pg_tenants")) || [];
+
+            document.getElementById("totalRoomsCount").innerText = storedRooms.length;
+            document.getElementById("activeTenantsCount").innerText = storedTenants.filter(t => t.status === "Booked").length;
+
+            let totalBedsAvailable = 0;
+            let fullRoomsCounter = 0;
+
+            storedRooms.forEach(room => {
+                const activeTenantsInRoom = storedTenants.filter(t => 
+                    String(t.room).trim() === String(room.roomNo).trim() && t.status === "Booked"
+                ).length;
+                
+                let sharingCapacity = parseInt(room.sharing || 1);
+                let bedsLeft = sharingCapacity - activeTenantsInRoom;
+                if (bedsLeft < 0) bedsLeft = 0; 
+
+                if (bedsLeft <= 0) {
+                    fullRoomsCounter++;
+                } else {
+                    totalBedsAvailable += bedsLeft;
+                }
+            });
+
+            document.getElementById("availableBedsCount").innerText = totalBedsAvailable;
+            document.getElementById("fullRoomsCount").innerText = fullRoomsCounter;
+
+            // 🔥 2. SECURE LOGOUT ENGINE
+            const logoutBtn = document.getElementById("logoutBtn");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    if (confirm("Kya aap sach me logout karna chahte hain?")) {
+                        // Login session destroy karo
+                        localStorage.removeItem("isLoggedIn");
+                        
+                        // replace use karne se browser back button memory block ho jayegi
+                        window.location.replace("login.html"); 
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+/* Table Layout Fix */
+.tenant-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: white;
+}
+
+.tenant-table th, .tenant-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 14px;
+}
+
+.tenant-table th {
+    background-color: #f7fafc;
+    color: #4a5568;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+}
+
+.tenant-table tr:hover {
+    background-color: #f8fafc;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-pending {
+    background-color: #feebcb;
+    color: #c05621;
+}
+
+.status-paid {
+    background-color: #c6f6d5;
+    color: #22543d;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Booking - SmartPG</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo"><h2><i class="fa-solid fa-hotel"></i> SmartPG</h2></div>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                <li><a href="rooms.html"><i class="fa-solid fa-bed"></i> Rooms</a></li>
+                <li class="active"><a href="tenant.html"><i class="fa-solid fa-users"></i> Tenants</a></li>
+                <li><a href="fees.html"><i class="fa-solid fa-money-check-dollar"></i> Fees</a></li>
+                <li><a href="#" id="logoutBtn" style="color: #e53e3e;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h1>Tenant Room Booking</h1>
+                <p style="color: #718096; margin-top: 5px;">Book beds for new tenants and manage roster with timestamps.</p>
+            </header>
+
+            <!-- Booking Form -->
+            <div class="form-container" style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; border-top: 4px solid #38a169;">
+                <h3 style="margin-bottom: 20px; color: #2f855a;"><i class="fa-solid fa-key"></i> New Room Booking Form</h3>
+                <form id="tenantForm" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-end;">
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="display:block; margin-bottom:8px; font-size:14px; font-weight:600; color:#4a5568;">Tenant Full Name</label>
+                        <input type="text" id="tenantName" placeholder="Enter full name" required style="width:100%; padding:11px; border:1px solid #cbd5e0; border-radius:6px; font-size:14px;">
+                    </div>
+                    <div style="flex: 1; min-width: 180px;">
+                        <label style="display:block; margin-bottom:8px; font-size:14px; font-weight:600; color:#4a5568;">Phone Number</label>
+                        <input type="text" id="tenantPhone" maxlength="10" placeholder="10-digit number" required style="width:100%; padding:11px; border:1px solid #cbd5e0; border-radius:6px; font-size:14px;">
+                    </div>
+                    <div style="flex: 1; min-width: 200px;">
+                        <label style="display:block; margin-bottom:8px; font-size:14px; font-weight:600; color:#4a5568;">Select Available Room</label>
+                        <select id="tenantRoom" required style="width:100%; padding:11px; border:1px solid #cbd5e0; border-radius:6px; font-size:14px; background-color: #fff;">
+                            <!-- Dynamically loaded -->
+                        </select>
+                    </div>
+                    <button type="submit" style="background:#38a169; color:white; padding:12px 25px; border:none; border-radius:6px; font-weight:bold; font-size:14px; cursor:pointer; transition: background 0.2s;"><i class="fa-solid fa-check-circle"></i> Confirm Booking</button>
+                </form>
+            </div>
+
+            <!-- Tenants List Table with Time Columns -->
+            <div class="table-container" style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <h3 style="margin-bottom: 15px; color: #4a5568;"><i class="fa-solid fa-address-book"></i> Active Bookings Roster</h3>
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="background: #f7fafc; border-bottom: 2px solid #e2e8f0; color: #4a5568; font-size: 13px;">
+                            <th style="padding: 12px;">TENANT NAME</th>
+                            <th style="padding: 12px;">ROOM</th>
+                            <th style="padding: 12px;">CONTACT NO</th>
+                            <th style="padding: 12px;">BOOKED AT</th>
+                            <th style="padding: 12px;">CHECKED OUT AT</th>
+                            <th style="padding: 12px;">STATUS</th>
+                            <th style="padding: 12px; text-align: center;">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tenantTableBody">
+                        <!-- JS Content -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    <script src="tenant.js"></script>
+</body>
+</html>
